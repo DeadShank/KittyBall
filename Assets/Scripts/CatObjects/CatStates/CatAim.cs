@@ -24,6 +24,7 @@ namespace CatObjects.CatStates
             if (tapController.BlockObject)
             {
                 Status = StateStatus.Exit;
+                tapController.BlockObject = false;
             }
         }
 

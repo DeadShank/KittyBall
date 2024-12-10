@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace CatSpawner
+namespace Spawner
 {
     public class CatSpawner : MonoBehaviour
     {

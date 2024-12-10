@@ -1,4 +1,5 @@
 using CatMergeService;
+using Spawner;
 using UnityEngine;
 
 namespace Utils
@@ -6,7 +7,7 @@ namespace Utils
     public class RegistrationClass : MonoBehaviour
     {
         [SerializeField] private TapController tapController;
-        [SerializeField] private CatSpawner.CatSpawner catSpawner;
+        [SerializeField] private CatSpawner catSpawner;
         [SerializeField] private CatMerger catMerger;
         private void Awake()
         {

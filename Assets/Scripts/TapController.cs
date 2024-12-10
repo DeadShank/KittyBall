@@ -1,20 +1,11 @@
-using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Utils;
 
 public class TapController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     public bool moveObject;
     public bool BlockObject;
     public float ValueX => TakePositionTap();
-
-    private CatSpawner.CatSpawner _catSpawner;
-
-    private void Start()
-    {
-        _catSpawner = ServiceLocator.Get<CatSpawner.CatSpawner>();
-    }
 
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -26,7 +17,6 @@ public class TapController : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         Reset();
     }
 
-
     private void Reset()
     {
         moveObject = false;
@@ -35,14 +25,9 @@ public class TapController : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     private float TakePositionTap()
     {
-        if (moveObject)
-        {
-            Vector3 mousePosition = Input.mousePosition;
-            mousePosition.z = Camera.main.WorldToScreenPoint(transform.position).z;
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
-            return worldPosition.x;
-        }
-
-        return 0f;
+        Vector3 mousePosition = Input.mousePosition;
+        mousePosition.z = Camera.main.WorldToScreenPoint(transform.position).z;
+        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+        return worldPosition.x;
     }
 }

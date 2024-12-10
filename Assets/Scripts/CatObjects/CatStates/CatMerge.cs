@@ -1,8 +1,8 @@
 namespace CatObjects.CatStates
 {
-    public class CatMerge : State<global::Cat>
+    public class CatMerge : State<Cat>
     {
-        public CatMerge(global::Cat stateTarget) : base(stateTarget)
+        public CatMerge(Cat stateTarget) : base(stateTarget)
         {
         }
 
