@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -7,6 +8,8 @@ public class TapController : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public bool BlockObject;
     public float ValueX => TakePositionTap();
 
+    public event Action ButtonUpEvent;
+    
     public void OnPointerDown(PointerEventData eventData)
     {
         moveObject = true;
@@ -19,6 +22,7 @@ public class TapController : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     private void Reset()
     {
+        ButtonUpEvent?.Invoke();
         moveObject = false;
         BlockObject = true;
     }
@@ -28,6 +32,9 @@ public class TapController : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         Vector3 mousePosition = Input.mousePosition;
         mousePosition.z = Camera.main.WorldToScreenPoint(transform.position).z;
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+        float leftBorder = -0.85f;
+        float rightBorder = 0.85f;
+        worldPosition.x = Mathf.Clamp(worldPosition.x, leftBorder, rightBorder);
         return worldPosition.x;
     }
 }

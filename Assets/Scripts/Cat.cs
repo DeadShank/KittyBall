@@ -7,6 +7,7 @@ using Utils;
 public class Cat : FSMBehaviour<Cat>
 {
     public string CatType;
+    public bool AfterMerge;
 
     public TapController TapController;
     public event Action<CollisionData> CollisionEvent;
@@ -23,9 +24,16 @@ public class Cat : FSMBehaviour<Cat>
         Transitions[idle] = aim;
         Transitions[aim] = moving;
         Transitions[moving] = merge;
-        ChangeState(idle);
+        if (AfterMerge)
+        {
+            ChangeState(moving);
+        }
+        else
+        {
+            ChangeState(idle);
+        }
     }
-        
+    
     protected void OnDestroy()
     {
         DisposeCollisionEvent();

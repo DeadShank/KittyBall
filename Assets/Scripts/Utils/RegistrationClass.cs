@@ -14,7 +14,7 @@ namespace Utils
             ServiceLocator.Add(tapController);
             ServiceLocator.Add(catSpawner);
             ServiceLocator.Add(catMerger);
-
+            
             catSpawner.SpawnEvent += catMerger.SubscribeCat;
             catSpawner.SpawnCat();
         }

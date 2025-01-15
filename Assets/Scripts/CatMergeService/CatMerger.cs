@@ -1,9 +1,13 @@
+using Spawner;
 using UnityEngine;
+using Utils;
 
 namespace CatMergeService
 {
     public class CatMerger : MonoBehaviour
     {
+        public CatSpawner CatSpawner;
+        
         public void SubscribeCat(Cat cat)
         {
             cat.CollisionEvent += HandleCollision;
@@ -11,11 +15,14 @@ namespace CatMergeService
 
         private void HandleCollision(CollisionData collision)
         {
+            CatSpawner = ServiceLocator.Get<CatSpawner>();
+
             if (collision.SelfCat.CatType.Equals(collision.OtherCat?.CatType))
             {
-                Debug.Log($"merge: {collision.SelfCat.CatType}");
                 Destroy(collision.SelfCat.gameObject);
                 Destroy(collision.OtherCat.gameObject);
+                CatSpawner.SpawnAfterMerge(collision.SelfCat.CatType, collision.SelfCat.transform);
+                
             }
         }
     }
