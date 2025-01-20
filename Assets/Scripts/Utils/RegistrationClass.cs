@@ -16,7 +16,7 @@ namespace Utils
             ServiceLocator.Add(catMerger);
             
             catSpawner.SpawnEvent += catMerger.SubscribeCat;
-            catSpawner.SpawnCat();
+            catSpawner.SpawnRandomCat();
         }
     }
 }
