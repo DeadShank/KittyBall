@@ -27,7 +27,7 @@ namespace Spawner
 
         public void SpawnRandomCat()
         {
-            int randomIndex = random.Next(prefabs.Count);
+            int randomIndex = random.Next(prefabs.Count - 2);
             var cat = Instantiate(prefabs[randomIndex], spawnPoint.position, spawnPoint.rotation);
             SpawnEvent?.Invoke(cat);
             cat.CollisionEvent += CollisionCallBack;
@@ -42,10 +42,13 @@ namespace Spawner
         public void SpawnAfterMerge(string cat, Transform transform)
         {
             int newCatIndex = catIndexMap[cat];
-            newCatIndex++;
-            var newCat = Instantiate(prefabs[newCatIndex], transform.position, transform.rotation);
-            SpawnEvent?.Invoke(newCat);
-            newCat.AfterMerge = true;
+            if (newCatIndex < prefabs.Count - 1)
+            {
+                newCatIndex++;
+                var newCat = Instantiate(prefabs[newCatIndex], transform.position, transform.rotation);
+                SpawnEvent?.Invoke(newCat);
+                newCat.AfterMerge = true;
+            }
         }
     }
 }

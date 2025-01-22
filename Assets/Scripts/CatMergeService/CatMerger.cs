@@ -30,8 +30,10 @@ namespace CatMergeService
                 if (counterCollisions[selfCatType] == 2)
                 {
                     CatSpawner.SpawnAfterMerge(selfCatType, collision.SelfCat.transform);
+
                     counterCollisions[selfCatType] = 0;
                 }
+                
             }
         }
     }

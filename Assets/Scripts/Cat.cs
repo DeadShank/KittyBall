@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using CatObjects.CatStates;
+using ScoreService;
 using UnityEngine;
 using Utils;
 
@@ -10,11 +11,13 @@ public class Cat : FSMBehaviour<Cat>
     public bool AfterMerge;
 
     public TapController TapController;
+    public ScoreCounter ScoreCounter;
     public event Action<CollisionData> CollisionEvent;
 
     protected override void InitStates()
     {
         TapController = ServiceLocator.Get<TapController>();
+        ScoreCounter = ServiceLocator.Get<ScoreCounter>();
 
         var idle = new CatIdle(this);
         var aim = new CatAim(this);
@@ -37,6 +40,7 @@ public class Cat : FSMBehaviour<Cat>
     protected void OnDestroy()
     {
         DisposeCollisionEvent();
+        ScoreCounter.AddScore(CatType);
     }
 
     public void OnCollisionEnter2D(Collision2D other)
