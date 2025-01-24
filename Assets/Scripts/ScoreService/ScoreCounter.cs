@@ -18,12 +18,10 @@ namespace ScoreService
         
         [SerializeField] private TextMeshProUGUI textMeshPro;
 
-        public void AddScore(string catType)
+        public void AddScore(int score)
         {
-            if (scoreMap.TryGetValue(catType, out var score))
-            {
-                scoreTotal += score;
-            }
+            scoreTotal += score;
+            
             textMeshPro.text = scoreTotal.ToString();
         }
         

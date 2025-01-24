@@ -68,6 +68,10 @@ PrefabInstance:
       propertyPath: CatType
       value: BrownCat
       objectReference: {fileID: 0}
+    - target: {fileID: 1555808405476476727, guid: a80abe0678955f94caf3d3c3f8e78dfb, type: 3}
+      propertyPath: CatScore
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 5194364014551013524, guid: a80abe0678955f94caf3d3c3f8e78dfb, type: 3}
       propertyPath: m_Color.b
       value: 0

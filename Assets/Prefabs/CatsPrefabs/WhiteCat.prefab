@@ -64,6 +64,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WhiteCat
       objectReference: {fileID: 0}
+    - target: {fileID: 1555808405476476727, guid: a80abe0678955f94caf3d3c3f8e78dfb, type: 3}
+      propertyPath: CatScore
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

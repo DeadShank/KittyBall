@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using CatObjects.CatStates;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = System.Random;
 
 namespace Spawner
@@ -11,9 +11,11 @@ namespace Spawner
     {
         [SerializeField] private List<Cat> prefabs;
         [SerializeField] private Transform spawnPoint;
+        [SerializeField] private Image nextCatImage;
 
         private Random random = new Random();
         private Dictionary<string, int> catIndexMap = new Dictionary<string, int>();
+        private int nextCatIndex;
 
         public event Action<Cat> SpawnEvent;
 
@@ -27,10 +29,10 @@ namespace Spawner
 
         public void SpawnRandomCat()
         {
-            int randomIndex = random.Next(prefabs.Count - 2);
-            var cat = Instantiate(prefabs[randomIndex], spawnPoint.position, spawnPoint.rotation);
+            var cat = Instantiate(prefabs[nextCatIndex], spawnPoint.position, spawnPoint.rotation);
             SpawnEvent?.Invoke(cat);
             cat.CollisionEvent += CollisionCallBack;
+            NextCatImage();
         }
 
         private void CollisionCallBack(CollisionData collision)
@@ -45,10 +47,26 @@ namespace Spawner
             if (newCatIndex < prefabs.Count - 1)
             {
                 newCatIndex++;
-                var newCat = Instantiate(prefabs[newCatIndex], transform.position, transform.rotation);
+                var newTransform = transform.position;
+                newTransform.y += 1f;
+                var newCat = Instantiate(prefabs[newCatIndex], newTransform, transform.rotation);
                 SpawnEvent?.Invoke(newCat);
                 newCat.AfterMerge = true;
+                ActivateEffects(newCat);
             }
+        }
+
+        private static void ActivateEffects(Cat newCat)
+        {
+            newCat.GetComponent<ParticleSystem>().Play();
+            newCat.GetComponent<AudioSource>().Play();
+        }
+
+        private void NextCatImage()
+        {
+            nextCatIndex = random.Next(prefabs.Count);
+            nextCatImage.color = prefabs[nextCatIndex].GetComponent<SpriteRenderer>().color;
+            nextCatImage.sprite = prefabs[nextCatIndex].GetComponent<SpriteRenderer>().sprite;
         }
     }
 }

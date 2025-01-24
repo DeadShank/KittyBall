@@ -2,14 +2,15 @@ using System;
 using System.Collections.Generic;
 using CatObjects.CatStates;
 using ScoreService;
-using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using Utils;
 
 public class Cat : FSMBehaviour<Cat>
 {
     public string CatType;
+    public int CatScore;
     public bool AfterMerge;
+    public bool ReadyToLose;
 
     public TapController TapController;
     public ScoreCounter ScoreCounter;
@@ -41,7 +42,7 @@ public class Cat : FSMBehaviour<Cat>
     protected void OnDestroy()
     {
         DisposeCollisionEvent();
-        ScoreCounter.AddScore(CatType);
+        ScoreCounter.AddScore(CatScore);
     }
 
     public void OnCollisionEnter2D(Collision2D other)
@@ -50,6 +51,7 @@ public class Cat : FSMBehaviour<Cat>
         collisionData.SelfCat = this;
         collisionData.OtherCat = other.gameObject.GetComponent<Cat>();
         CollisionEvent?.Invoke(collisionData);
+        ReadyToLose = true;
     }
 
     public void DisposeCollisionEvent()
