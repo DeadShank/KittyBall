@@ -1160,6 +1160,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2032431570}
   - component: {fileID: 2032431569}
+  - component: {fileID: 2032431571}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
@@ -1179,14 +1180,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd287a3cd0db49488d5a41656ec0d10f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabs:
-  - {fileID: 530592117027460579, guid: ed6787982bee4f548a74cbbfd0906c4e, type: 3}
-  - {fileID: 8772695485751775652, guid: 48921e0e1896f504790e21142cf4ad04, type: 3}
-  - {fileID: 8607589636480598538, guid: 1502cd75cac682949aed57f6945b284a, type: 3}
-  - {fileID: 8374150344306911994, guid: 74635e610bdece64999690ee12afa0d0, type: 3}
-  - {fileID: 5534654463131455736, guid: 6a567a03873bead4a86d472107693231, type: 3}
   spawnPoint: {fileID: 1455859533}
   nextCatImage: {fileID: 744079919}
+  objectPool: {fileID: 2032431571}
 --- !u!4 &2032431570
 Transform:
   m_ObjectHideFlags: 0
@@ -1203,6 +1199,24 @@ Transform:
   - {fileID: 1455859533}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2032431571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2032431568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c68e26018e4048fea75fe387ce764251, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabs:
+  - {fileID: 530592117027460579, guid: ed6787982bee4f548a74cbbfd0906c4e, type: 3}
+  - {fileID: 8772695485751775652, guid: 48921e0e1896f504790e21142cf4ad04, type: 3}
+  - {fileID: 8607589636480598538, guid: 1502cd75cac682949aed57f6945b284a, type: 3}
+  - {fileID: 8374150344306911994, guid: 74635e610bdece64999690ee12afa0d0, type: 3}
+  - {fileID: 5534654463131455736, guid: 6a567a03873bead4a86d472107693231, type: 3}
 --- !u!1001 &5344896121187930494
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using Spawner.ObjectsPool;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = System.Random;
@@ -9,9 +9,9 @@ namespace Spawner
 {
     public class CatSpawner : MonoBehaviour
     {
-        [SerializeField] private List<Cat> prefabs;
         [SerializeField] private Transform spawnPoint;
         [SerializeField] private Image nextCatImage;
+        [SerializeField] private ObjectPool objectPool;
 
         private Random random = new Random();
         private Dictionary<string, int> catIndexMap = new Dictionary<string, int>();
@@ -21,15 +21,15 @@ namespace Spawner
 
         private void Awake()
         {
-            for (var i = 0; i < prefabs.Count; i++)
+            for (var i = 0; i < objectPool.prefabs.Count; i++)
             {
-                catIndexMap.Add(prefabs[i].CatType, i);
+                catIndexMap.Add(objectPool.prefabs[i].CatType, i);
             }
         }
 
         public void SpawnRandomCat()
         {
-            var cat = Instantiate(prefabs[nextCatIndex], spawnPoint.position, spawnPoint.rotation);
+            var cat = objectPool.GetCat(nextCatIndex, spawnPoint.position, spawnPoint);
             SpawnEvent?.Invoke(cat);
             cat.CollisionEvent += CollisionCallBack;
             NextCatImage();
@@ -44,12 +44,12 @@ namespace Spawner
         public void SpawnAfterMerge(string cat, Transform transform)
         {
             int newCatIndex = catIndexMap[cat];
-            if (newCatIndex < prefabs.Count - 1)
+            if (newCatIndex < objectPool.prefabs.Count - 1)
             {
                 newCatIndex++;
                 var newTransform = transform.position;
                 newTransform.y += 1f;
-                var newCat = Instantiate(prefabs[newCatIndex], newTransform, transform.rotation);
+                var newCat = objectPool.GetCat(nextCatIndex, newTransform, transform);
                 SpawnEvent?.Invoke(newCat);
                 newCat.AfterMerge = true;
                 ActivateEffects(newCat);
@@ -64,9 +64,9 @@ namespace Spawner
 
         private void NextCatImage()
         {
-            nextCatIndex = random.Next(prefabs.Count);
-            nextCatImage.color = prefabs[nextCatIndex].GetComponent<SpriteRenderer>().color;
-            nextCatImage.sprite = prefabs[nextCatIndex].GetComponent<SpriteRenderer>().sprite;
+            nextCatIndex = random.Next(objectPool.prefabs.Count);
+            nextCatImage.color = objectPool.prefabs[nextCatIndex].GetComponent<SpriteRenderer>().color;
+            nextCatImage.sprite = objectPool.prefabs[nextCatIndex].GetComponent<SpriteRenderer>().sprite;
         }
     }
 }

@@ -4,8 +4,9 @@ using CatObjects.CatStates;
 using ScoreService;
 using UnityEngine;
 using Utils;
+using IPoolable = Spawner.ObjectsPool.IPoolable;
 
-public class Cat : FSMBehaviour<Cat>
+public class Cat : FSMBehaviour<Cat>, IPoolable
 {
     public string CatType;
     public int CatScore;
@@ -14,7 +15,14 @@ public class Cat : FSMBehaviour<Cat>
 
     public TapController TapController;
     public ScoreCounter ScoreCounter;
+    public GameObject GameObject => gameObject;
     public event Action<CollisionData> CollisionEvent;
+    public event Action<IPoolable> Destroyed;
+
+    public void Reset()
+    {
+        Destroyed?.Invoke(this);
+    }
 
     protected override void InitStates()
     {
@@ -43,6 +51,7 @@ public class Cat : FSMBehaviour<Cat>
     {
         DisposeCollisionEvent();
         ScoreCounter.AddScore(CatScore);
+        Reset();
     }
 
     public void OnCollisionEnter2D(Collision2D other)
@@ -61,4 +70,5 @@ public class Cat : FSMBehaviour<Cat>
             CollisionEvent -= (Action<CollisionData>)d;
         }
     }
+    
 }
